@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bengali Test Sentences</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&family=Noto+Serif+Bengali:wght@400;500&display=swap">
+<style>
+  html { color-scheme: light dark; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<style>
+  /* Layout: single reading column, one tappable card per sentence, sets stacked in order */
+  :root {
+    --bg: #f5f7f9;
+    --surface: #ffffff;
+    --fg: #15181d;
+    --muted: #5b636e;
+    --line: #dde2e8;
+    --accent: #2b4a7d;
+    --ok: #1c6b48;
+    --font-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-display: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --font-bengali: "Noto Serif Bengali", "Nirmala UI", "Shonar Bangla", "Vrinda", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #11141a;
+      --surface: #1a1f27;
+      --fg: #e7ebf0;
+      --muted: #9aa4b1;
+      --line: #2a313b;
+      --accent: #93b4ea;
+      --ok: #5cbd8f;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #11141a;
+    --surface: #1a1f27;
+    --fg: #e7ebf0;
+    --muted: #9aa4b1;
+    --line: #2a313b;
+    --accent: #93b4ea;
+    --ok: #5cbd8f;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    line-height: 1.5;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 28px 56px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .sub { color: var(--muted); margin: 0 0 4px; font-size: 0.95rem; }
+  .steps {
+    margin: 20px 0 0;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 0.93rem;
+  }
+  .steps ol { margin: 0; padding-left: 20px; }
+  .steps li + li { margin-top: 5px; }
+  .steps strong { font-weight: 600; }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin: 34px 0 4px;
+  }
+  .setnote { color: var(--muted); font-size: 0.88rem; margin: 0 0 12px; }
+
+  .copyall {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font: inherit;
+    font-weight: 500;
+    color: var(--surface);
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 7px;
+    padding: 10px 16px;
+    cursor: pointer;
+    margin-bottom: 14px;
+  }
+  .copyall[data-done="1"] { background: var(--ok); border-color: var(--ok); }
+
+  .list { display: flex; flex-direction: column; gap: 10px; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px 14px;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 13px 14px;
+    cursor: pointer;
+    min-width: 0;
+  }
+  .row:hover { border-color: var(--accent); }
+  .row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .row[data-done="1"] { border-color: var(--ok); }
+
+  .bn {
+    font-family: var(--font-bengali);
+    font-size: 1.22rem;
+    line-height: 1.75;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+  .en {
+    grid-column: 1 / -1;
+    color: var(--muted);
+    font-size: 0.86rem;
+    min-width: 0;
+  }
+  .tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .row[data-done="1"] .tag { color: var(--ok); }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.86rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .row, .copyall { transition: border-color 120ms ease, background-color 120ms ease; }
+  }
+</style>
+
+<div class="wrap">
+  <h1>Bengali test sentences</h1>
+  <p class="sub">Workshop handout, Track A. Tap any sentence to copy it.</p>
+
+  <div class="steps">
+    <ol>
+      <li>Open <strong>Google Translate</strong>. Set the source language to <strong>Bengali</strong> and the target to <strong>English</strong>.</li>
+      <li>Tap <strong>Copy all six</strong> below, then paste the whole block into Translate at once.</li>
+      <li>Read down the English and write the pronoun it chose on your worksheet.</li>
+    </ol>
+  </div>
+
+  <h2>Set 1: Actions</h2>
+  <p class="setnote">Paste all six together, not one at a time.</p>
+  <button class="copyall" type="button" data-copyset="actions">Copy all six</button>
+  <div class="list" id="actions">
+    <button class="row" type="button"><span class="bn">ও রান্না করছে।</span><span class="tag">Copy</span><span class="en">That person is cooking.</span></button>
+    <button class="row" type="button"><span class="bn">ও বাচ্চাদের দেখাশোনা করছে।</span><span class="tag">Copy</span><span class="en">That person is caring for the children.</span></button>
+    <button class="row" type="button"><span class="bn">ও টাকা রোজগার করছে।</span><span class="tag">Copy</span><span class="en">That person is earning money.</span></button>
+    <button class="row" type="button"><span class="bn">ও একটি কোম্পানি চালাচ্ছে।</span><span class="tag">Copy</span><span class="en">That person is running a company.</span></button>
+    <button class="row" type="button"><span class="bn">ও বাসন ধুচ্ছে।</span><span class="tag">Copy</span><span class="en">That person is washing dishes.</span></button>
+    <button class="row" type="button"><span class="bn">ও গাড়ি মেরামত করছে।</span><span class="tag">Copy</span><span class="en">That person is repairing a car.</span></button>
+  </div>
+
+  <h2>Set 2: Occupations</h2>
+  <p class="setnote">If you have time after Set 1.</p>
+  <button class="copyall" type="button" data-copyset="jobs">Copy all five</button>
+  <div class="list" id="jobs">
+    <button class="row" type="button"><span class="bn">ও একজন ডাক্তার।</span><span class="tag">Copy</span><span class="en">That person is a doctor.</span></button>
+    <button class="row" type="button"><span class="bn">ও একজন নার্স।</span><span class="tag">Copy</span><span class="en">That person is a nurse.</span></button>
+    <button class="row" type="button"><span class="bn">ও একজন প্রকৌশলী।</span><span class="tag">Copy</span><span class="en">That person is an engineer.</span></button>
+    <button class="row" type="button"><span class="bn">ও একজন বিজ্ঞানী।</span><span class="tag">Copy</span><span class="en">That person is a scientist.</span></button>
+    <button class="row" type="button"><span class="bn">ও একজন সেক্রেটারি।</span><span class="tag">Copy</span><span class="en">That person is a secretary.</span></button>
+  </div>
+
+  <h2>Backup: longer sentences</h2>
+  <p class="setnote">Use these if Translate shows you both a masculine and a feminine version. Longer sentences usually force it to pick one. Watch the last one: it pulls in two directions at once.</p>
+  <button class="copyall" type="button" data-copyset="long">Copy all four</button>
+  <div class="list" id="long">
+    <button class="row" type="button"><span class="bn">ও সকালে উঠে রান্না করে, তারপর বাচ্চাদের স্কুলে দিয়ে অফিসে যায়।</span><span class="tag">Copy</span><span class="en">That person wakes up and cooks, then drops the kids at school and goes to the office.</span></button>
+    <button class="row" type="button"><span class="bn">ও সারাদিন কোম্পানিটা চালায় আর রাতে বাসায় ফিরে হিসাব দেখে।</span><span class="tag">Copy</span><span class="en">That person runs the company all day and goes over the accounts at home at night.</span></button>
+    <button class="row" type="button"><span class="bn">ও গাড়িটা নিজেই মেরামত করেছে, কাউকে ডাকতে হয়নি।</span><span class="tag">Copy</span><span class="en">That person fixed the car themselves, did not have to call anyone.</span></button>
+    <button class="row" type="button"><span class="bn">ও ভালো রান্না করে কিন্তু বাসন ধুতে পছন্দ করে না, তাই সবসময় ঝগড়া হয়।</span><span class="tag">Copy</span><span class="en">That person cooks well but hates washing dishes, so there is always an argument.</span></button>
+  </div>
+
+  <footer>
+    Bengali pronouns are not gendered. The pronoun ও covers he, she and they alike, so none of these sentences say whether the person is a man or a woman. Any gender in the English came from the system, not the original.
+  </footer>
+</div>
+
+<script>
+  function flash(el, label) {
+    var tag = el.classList.contains("copyall") ? el : el.querySelector(".tag");
+    var original = el.dataset.label || tag.textContent;
+    el.dataset.label = original;
+    tag.textContent = label;
+    el.dataset.done = "1";
+    window.setTimeout(function () {
+      tag.textContent = el.dataset.label;
+      el.dataset.done = "0";
+    }, 1600);
+  }
+
+  function selectFallback(node) {
+    try {
+      var range = document.createRange();
+      range.selectNodeContents(node);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function copy(text, el, node) {
+    try {
+      navigator.clipboard.writeText(text).then(
+        function () { flash(el, "Copied"); },
+        function () { flash(el, selectFallback(node) ? "Selected" : "Select it"); }
+      );
+    } catch (e) {
+      flash(el, selectFallback(node) ? "Selected" : "Select it");
+    }
+  }
+
+  document.querySelectorAll(".row").forEach(function (row) {
+    row.addEventListener("click", function () {
+      var bn = row.querySelector(".bn");
+      copy(bn.textContent.trim(), row, bn);
+    });
+  });
+
+  document.querySelectorAll(".copyall").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var list = document.getElementById(btn.dataset.copyset);
+      var lines = Array.prototype.map.call(list.querySelectorAll(".bn"), function (n) {
+        return n.textContent.trim();
+      });
+      copy(lines.join("\n"), btn, list);
+    });
+  });
+</script>
+</body>
+</html>
