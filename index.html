@@ -14,7 +14,7 @@
 </head>
 <body>
 <style>
-  /* Layout: single reading column, one tappable card per sentence, sets stacked in order */
+  /* Layout: single reading column, one card per sentence, each with its own copy button */
   :root {
     --bg: #f5f7f9;
     --surface: #ffffff;
@@ -70,7 +70,8 @@
     margin: 0 0 8px;
     text-wrap: balance;
   }
-  .sub { color: var(--muted); margin: 0 0 4px; font-size: 0.95rem; }
+  .sub { color: var(--muted); margin: 0; font-size: 0.95rem; }
+
   .steps {
     margin: 20px 0 0;
     padding: 14px 16px;
@@ -92,44 +93,18 @@
   }
   .setnote { color: var(--muted); font-size: 0.88rem; margin: 0 0 12px; }
 
-  .copyall {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font: inherit;
-    font-weight: 500;
-    color: var(--surface);
-    background: var(--accent);
-    border: 1px solid var(--accent);
-    border-radius: 7px;
-    padding: 10px 16px;
-    cursor: pointer;
-    margin-bottom: 14px;
-  }
-  .copyall[data-done="1"] { background: var(--ok); border-color: var(--ok); }
-
   .list { display: flex; flex-direction: column; gap: 10px; }
 
   .row {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 10px 14px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 14px;
     align-items: center;
-    width: 100%;
-    text-align: left;
-    font: inherit;
-    color: inherit;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 8px;
     padding: 13px 14px;
-    cursor: pointer;
-    min-width: 0;
   }
-  .row:hover { border-color: var(--accent); }
-  .row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .row[data-done="1"] { border-color: var(--ok); }
-
   .bn {
     font-family: var(--font-bengali);
     font-size: 1.22rem;
@@ -139,19 +114,32 @@
   }
   .en {
     grid-column: 1 / -1;
+    grid-row: 2;
     color: var(--muted);
     font-size: 0.86rem;
     min-width: 0;
   }
-  .tag {
-    font-size: 0.72rem;
+
+  .copy {
+    grid-column: 2;
+    grid-row: 1;
+    font: inherit;
+    font-size: 0.82rem;
     font-weight: 600;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 13px;
+    cursor: pointer;
     white-space: nowrap;
+    align-self: center;
   }
-  .row[data-done="1"] .tag { color: var(--ok); }
+  .copy:hover { border-color: var(--accent); }
+  .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .copy[data-done="1"] { color: var(--ok); border-color: var(--ok); }
 
   footer {
     margin-top: 40px;
@@ -161,53 +149,50 @@
     font-size: 0.86rem;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .row, .copyall { transition: border-color 120ms ease, background-color 120ms ease; }
+    .copy { transition: border-color 120ms ease, color 120ms ease; }
   }
 </style>
 
 <div class="wrap">
   <h1>Bengali test sentences</h1>
-  <p class="sub">Workshop handout, Track A. Tap any sentence to copy it.</p>
+  <p class="sub">Workshop handout, Track A.</p>
 
   <div class="steps">
     <ol>
       <li>Open <strong>Google Translate</strong>. Set the source language to <strong>Bengali</strong> and the target to <strong>English</strong>.</li>
-      <li>Tap <strong>Copy all six</strong> below, then paste the whole block into Translate at once.</li>
-      <li>Read down the English and write the pronoun it chose on your worksheet.</li>
+      <li>Tap <strong>Copy</strong> next to a sentence, then paste it into Translate.</li>
+      <li>Write the pronoun it chose on your worksheet, then do the next sentence.</li>
     </ol>
   </div>
 
   <h2>Set 1: Actions</h2>
-  <p class="setnote">Paste all six together, not one at a time.</p>
-  <button class="copyall" type="button" data-copyset="actions">Copy all six</button>
-  <div class="list" id="actions">
-    <button class="row" type="button"><span class="bn">ও রান্না করছে।</span><span class="tag">Copy</span><span class="en">That person is cooking.</span></button>
-    <button class="row" type="button"><span class="bn">ও বাচ্চাদের দেখাশোনা করছে।</span><span class="tag">Copy</span><span class="en">That person is caring for the children.</span></button>
-    <button class="row" type="button"><span class="bn">ও টাকা রোজগার করছে।</span><span class="tag">Copy</span><span class="en">That person is earning money.</span></button>
-    <button class="row" type="button"><span class="bn">ও একটি কোম্পানি চালাচ্ছে।</span><span class="tag">Copy</span><span class="en">That person is running a company.</span></button>
-    <button class="row" type="button"><span class="bn">ও বাসন ধুচ্ছে।</span><span class="tag">Copy</span><span class="en">That person is washing dishes.</span></button>
-    <button class="row" type="button"><span class="bn">ও গাড়ি মেরামত করছে।</span><span class="tag">Copy</span><span class="en">That person is repairing a car.</span></button>
+  <p class="setnote">Start here. Work down the list in order.</p>
+  <div class="list">
+    <div class="row"><span class="bn">ও রান্না করছে।</span><button class="copy" type="button">Copy</button><span class="en">That person is cooking.</span></div>
+    <div class="row"><span class="bn">ও বাচ্চাদের দেখাশোনা করছে।</span><button class="copy" type="button">Copy</button><span class="en">That person is caring for the children.</span></div>
+    <div class="row"><span class="bn">ও টাকা রোজগার করছে।</span><button class="copy" type="button">Copy</button><span class="en">That person is earning money.</span></div>
+    <div class="row"><span class="bn">ও একটি কোম্পানি চালাচ্ছে।</span><button class="copy" type="button">Copy</button><span class="en">That person is running a company.</span></div>
+    <div class="row"><span class="bn">ও বাসন ধুচ্ছে।</span><button class="copy" type="button">Copy</button><span class="en">That person is washing dishes.</span></div>
+    <div class="row"><span class="bn">ও গাড়ি মেরামত করছে।</span><button class="copy" type="button">Copy</button><span class="en">That person is repairing a car.</span></div>
   </div>
 
   <h2>Set 2: Occupations</h2>
   <p class="setnote">If you have time after Set 1.</p>
-  <button class="copyall" type="button" data-copyset="jobs">Copy all five</button>
-  <div class="list" id="jobs">
-    <button class="row" type="button"><span class="bn">ও একজন ডাক্তার।</span><span class="tag">Copy</span><span class="en">That person is a doctor.</span></button>
-    <button class="row" type="button"><span class="bn">ও একজন নার্স।</span><span class="tag">Copy</span><span class="en">That person is a nurse.</span></button>
-    <button class="row" type="button"><span class="bn">ও একজন প্রকৌশলী।</span><span class="tag">Copy</span><span class="en">That person is an engineer.</span></button>
-    <button class="row" type="button"><span class="bn">ও একজন বিজ্ঞানী।</span><span class="tag">Copy</span><span class="en">That person is a scientist.</span></button>
-    <button class="row" type="button"><span class="bn">ও একজন সেক্রেটারি।</span><span class="tag">Copy</span><span class="en">That person is a secretary.</span></button>
+  <div class="list">
+    <div class="row"><span class="bn">ও একজন ডাক্তার।</span><button class="copy" type="button">Copy</button><span class="en">That person is a doctor.</span></div>
+    <div class="row"><span class="bn">ও একজন নার্স।</span><button class="copy" type="button">Copy</button><span class="en">That person is a nurse.</span></div>
+    <div class="row"><span class="bn">ও একজন প্রকৌশলী।</span><button class="copy" type="button">Copy</button><span class="en">That person is an engineer.</span></div>
+    <div class="row"><span class="bn">ও একজন বিজ্ঞানী।</span><button class="copy" type="button">Copy</button><span class="en">That person is a scientist.</span></div>
+    <div class="row"><span class="bn">ও একজন সেক্রেটারি।</span><button class="copy" type="button">Copy</button><span class="en">That person is a secretary.</span></div>
   </div>
 
   <h2>Backup: longer sentences</h2>
   <p class="setnote">Use these if Translate shows you both a masculine and a feminine version. Longer sentences usually force it to pick one. Watch the last one: it pulls in two directions at once.</p>
-  <button class="copyall" type="button" data-copyset="long">Copy all four</button>
-  <div class="list" id="long">
-    <button class="row" type="button"><span class="bn">ও সকালে উঠে রান্না করে, তারপর বাচ্চাদের স্কুলে দিয়ে অফিসে যায়।</span><span class="tag">Copy</span><span class="en">That person wakes up and cooks, then drops the kids at school and goes to the office.</span></button>
-    <button class="row" type="button"><span class="bn">ও সারাদিন কোম্পানিটা চালায় আর রাতে বাসায় ফিরে হিসাব দেখে।</span><span class="tag">Copy</span><span class="en">That person runs the company all day and goes over the accounts at home at night.</span></button>
-    <button class="row" type="button"><span class="bn">ও গাড়িটা নিজেই মেরামত করেছে, কাউকে ডাকতে হয়নি।</span><span class="tag">Copy</span><span class="en">That person fixed the car themselves, did not have to call anyone.</span></button>
-    <button class="row" type="button"><span class="bn">ও ভালো রান্না করে কিন্তু বাসন ধুতে পছন্দ করে না, তাই সবসময় ঝগড়া হয়।</span><span class="tag">Copy</span><span class="en">That person cooks well but hates washing dishes, so there is always an argument.</span></button>
+  <div class="list">
+    <div class="row"><span class="bn">ও সকালে উঠে রান্না করে, তারপর বাচ্চাদের স্কুলে দিয়ে অফিসে যায়।</span><button class="copy" type="button">Copy</button><span class="en">That person wakes up and cooks, then drops the kids at school and goes to the office.</span></div>
+    <div class="row"><span class="bn">ও সারাদিন কোম্পানিটা চালায় আর রাতে বাসায় ফিরে হিসাব দেখে।</span><button class="copy" type="button">Copy</button><span class="en">That person runs the company all day and goes over the accounts at home at night.</span></div>
+    <div class="row"><span class="bn">ও গাড়িটা নিজেই মেরামত করেছে, কাউকে ডাকতে হয়নি।</span><button class="copy" type="button">Copy</button><span class="en">That person fixed the car themselves, did not have to call anyone.</span></div>
+    <div class="row"><span class="bn">ও ভালো রান্না করে কিন্তু বাসন ধুতে পছন্দ করে না, তাই সবসময় ঝগড়া হয়।</span><button class="copy" type="button">Copy</button><span class="en">That person cooks well but hates washing dishes, so there is always an argument.</span></div>
   </div>
 
   <footer>
@@ -216,15 +201,15 @@
 </div>
 
 <script>
-  function flash(el, label) {
-    var tag = el.classList.contains("copyall") ? el : el.querySelector(".tag");
-    var original = el.dataset.label || tag.textContent;
-    el.dataset.label = original;
-    tag.textContent = label;
-    el.dataset.done = "1";
+  function flash(btn, label) {
+    if (btn.dataset.busy === "1") return;
+    btn.dataset.busy = "1";
+    btn.dataset.done = "1";
+    btn.textContent = label;
     window.setTimeout(function () {
-      tag.textContent = el.dataset.label;
-      el.dataset.done = "0";
+      btn.textContent = "Copy";
+      btn.dataset.done = "0";
+      btn.dataset.busy = "0";
     }, 1600);
   }
 
@@ -241,31 +226,18 @@
     }
   }
 
-  function copy(text, el, node) {
-    try {
-      navigator.clipboard.writeText(text).then(
-        function () { flash(el, "Copied"); },
-        function () { flash(el, selectFallback(node) ? "Selected" : "Select it"); }
-      );
-    } catch (e) {
-      flash(el, selectFallback(node) ? "Selected" : "Select it");
-    }
-  }
-
-  document.querySelectorAll(".row").forEach(function (row) {
-    row.addEventListener("click", function () {
-      var bn = row.querySelector(".bn");
-      copy(bn.textContent.trim(), row, bn);
-    });
-  });
-
-  document.querySelectorAll(".copyall").forEach(function (btn) {
+  document.querySelectorAll(".copy").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      var list = document.getElementById(btn.dataset.copyset);
-      var lines = Array.prototype.map.call(list.querySelectorAll(".bn"), function (n) {
-        return n.textContent.trim();
-      });
-      copy(lines.join("\n"), btn, list);
+      var bn = btn.closest(".row").querySelector(".bn");
+      var text = bn.textContent.trim();
+      try {
+        navigator.clipboard.writeText(text).then(
+          function () { flash(btn, "Copied"); },
+          function () { flash(btn, selectFallback(bn) ? "Selected" : "Select it"); }
+        );
+      } catch (e) {
+        flash(btn, selectFallback(bn) ? "Selected" : "Select it");
+      }
     });
   });
 </script>
